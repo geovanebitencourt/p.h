@@ -1,0 +1,118 @@
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Professor {
+    private String nome;
+    private List<Disciplina> disciplinas;
+    private List<Horario> disponibilidade;
+
+    public Professor(String nome) {
+        this.nome = nome;
+        this.disciplinas = new ArrayList<>();
+        this.disponibilidade = new ArrayList<>();
+    }
+
+    public boolean isDisponivel(Horario horario) {
+        for (Horario h : disponibilidade) {
+            if (h.getDiaSemana() == horario.getDiaSemana()
+                    && h.getHorarioInicio().equals(horario.getHorarioInicio())
+                    && h.getHorarioFim().equals(horario.getHorarioFim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Disciplina> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public List<Horario> getDisponibilidade() {
+        return disponibilidade;
+    }
+}
+
+class Disciplina {
+    private String nome;
+    private Horario horario;
+    private int cargaHoraria;
+
+    public Disciplina(String nome, Horario horario, int cargaHoraria) {
+        this.nome = nome;
+        this.horario = horario;
+        this.cargaHoraria = cargaHoraria;
+    }
+
+    public Horario getHorario() {
+        return horario;
+    }
+}
+
+class Horario {
+    private DiaSemana diaSemana;
+    private LocalTime horarioInicio;
+    private LocalTime horarioFim;
+
+    public Horario(DiaSemana diaSemana, LocalTime horarioInicio, LocalTime horarioFim) {
+        this.diaSemana = diaSemana;
+        this.horarioInicio = horarioInicio;
+        this.horarioFim = horarioFim;
+    }
+
+    public DiaSemana getDiaSemana() {
+        return diaSemana;
+    }
+
+    public LocalTime getHorarioInicio() {
+        return horarioInicio;
+    }
+
+    public LocalTime getHorarioFim() {
+        return horarioFim;
+    }
+}
+
+enum DiaSemana {
+    SEGUNDA, TERCA, QUARTA, QUINTA, SEXTA, SABADO, DOMINGO
+}
+
+class Usuario {
+    private String nomeUsuario;
+    private String senha;
+
+    public Usuario(String nomeUsuario, String senha) {
+        this.nomeUsuario = nomeUsuario;
+        this.senha = senha;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+}
+
+public class AgendamentoApp {
+    private List<Professor> professores;
+    private Map<String, Usuario> usuarios;
+
+    public AgendamentoApp() {
+        this.professores = new ArrayList<>();
+        this.usuarios = new HashMap<>();
+    }
+
+    public void cadastrarUsuario(String nomeUsuario, String senha) {
+        Usuario usuario = new Usuario(nomeUsuario, senha);
+        usuarios.put(nomeUsuario, usuario);
+        System.out.println("Usuário cadastrado com sucesso!");
+    }
+
+    public boolean autenticarUsuario(String nomeUsuario, String senha) {
+        Usuario usuario = usuarios.get(nomeUsuario);
+        if (usuario != null && usuario.getSenha().equals(senha)) {
+            System.out.println("Aut
